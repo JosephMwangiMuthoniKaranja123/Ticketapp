@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Login
+        </title>
+    </head>
+        <body>
+            {% if messages %}
+              {% for message in messages %}
+                <p>{{message}}</p>
+              {% endfor %}
+            {% endif %}
+         
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <label for="username">Username:</label>
+                <input
+                type="text"
+                id="username"
+                name="username"
+                required>
+                <br><br>
+                <label for="password">Password:</label>
+                <input
+                type="password"
+                id="password"
+                name="password"
+                required>
+                 <label for="showpassword">Show password</label>
+                 <input
+                 type="checkbox"
+                 id="showpassword"
+                 >
+                <br><br>
+                <button type="submit">Login</button>
+
+            </form>
+            <p>Don't have account?
+                <a href="{% url "register" %}">register</a>
+            </p>
+               <script>
+                
+                
+                
+                const password=document.getElementById("password");
+                const showpassword=document.getElementById("showpassword");
+                   showpassword.addEventListener("change",()=>{
+                   if (showpassword.checked){
+                        password.type="text";
+                    }
+                    else {
+                        password.type="password";
+                    }
+                 })
+             
+            
+           </script>
+        </body>
+   
+</html>

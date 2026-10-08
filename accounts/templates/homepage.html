@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="stylesheet" href="{% static 'css/homepage.css'%}">
+    
+    
+    </head>
+     <body class="homebody">
+        
+            <div class="header">
+        <h1>My Tickets</h1>
+        </div>
+        
+        <div class="part1">
+        <h3>Everything you need to discover and exchange tickets, all in one place.</h3>
+        </div>
+           <div class="button">
+             <a href="{% url "register" %}">
+                <button>Register</button>
+             </a>
+               <a href="{% url "login" %}">
+                <button>login</button>
+             </a>
+            </div>
+          
+        </body>
+    </head>
+</html>
