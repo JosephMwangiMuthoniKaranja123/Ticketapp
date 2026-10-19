@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+    </head>
+    <body>
+        <nav>
+            <a href="{% url 'createevent' %}">Sell tickets</a>
+        
+            <a>My Tickets</a>
+            <a>Orders</a>
+            <a href="{% url 'cart' %}">Cart</a>
+            <a>Logout</a>
+            <a>Profile</a>
+        </nav>
+        <main>
+            {% include "events.html" %}
+        </main>
+        
+    </body>
+</html>

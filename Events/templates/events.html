@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <h2>Events</h2>
+        
+        {% for event in events %}
+          <div>
+          <h3>{{event.name}}</h3>
+          <p>{{event.description}}</p>
+          <P> Location:{{event.location}}</P>
+          <p>Date:{{event.date}}</p>
+          <a href="{% url 'event_details' event.id %}">view tickets</a>
+          </div> 
+          {% empty %}
+           <p>No events available yet</p>
+           
+        {% endfor %}  
+    </body>
+</html>

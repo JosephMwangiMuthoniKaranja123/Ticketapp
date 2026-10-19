@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <h2>Buy Ticket</h2>
+    <h3>Select Ticket type</h3>
+
+    <form method="post" action="{% url 'add_to_cart' }">
+        {% csrf_token %}
+        {% for tickettype in tickettypes %}
+          <label>
+            <input
+            type="radio"
+            name="tickettype"
+            value={{ticketype.id}}
+            data-price={{ticketype.price}}
+            data-quantity={{tickettype.quantity}}
+            
+            {% if forloop.first %}checked{% endif %}
+            required>
+            <strong>{{tickettype.name}}</strong>
+            -KSH {{tickettype.price}}
+
+            ({{tickettype.quantity}} available)
+          </label>
+          <br><br>
+        {% empty %}
+          <p>No tickets available</p>
+        {% endfor %}
+        {% if tickettypes %}
+        <label for="quantity">quantity</label>
+            <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            value="1"
+            min="1"
+            max="10"
+            required
+
+            >
+        <h4>
+            Total: KSH 
+            <span id="total">0.00</span>
+        </h4> 
+        <button type="submit">Add to cart</button> 
+        {% endif %}  
+
+        
+
+    </form>
+
+    <script>
+        const ticketoptions=document.querySelectorAll('input[name="tickettype"]');
+        const quantityinput=document.getElementById("quantity");
+         const totaldisplay=document.getElementById("total");
+    
+
+         
+        function Calculatetotal(){
+            const selected= document.querySelector('input[name="tickettype"]:checked')
+
+            if(!selected || !quantity){
+                return;
+            }
+            price= Number(selected.dataset.price);
+            quantity=Number(quantityinput.value);
+            total.textContent=(price*quantity).toLocaleString("en-KE",{minimumFractionDigits: 2,maximumFractionDigits: 2});
+
+
+        };
+        ticketoptions.forEach(option =>{
+            option.addEventListener("change",()=>{
+                const quantity=Number(selected.dataset.quantity);
+
+                quantityinput.max=Math.min(10,quantity);
+
+                if(Number(quantityinput.value) > Number(quantityinput.max)){
+                    quantityinput.value=quantityinput.max;
+                }
+                Calculatetotal()
+            })
+
+        });
+        quantityinput ?.addEventListener("input",Calculatetotal);
+
+        Calculatetotal();
+
+        
+    </script>
+</html>

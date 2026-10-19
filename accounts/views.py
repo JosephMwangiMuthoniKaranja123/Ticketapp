@@ -2,9 +2,25 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login
+from Events.models import Event
 
 def homepage(request):
     return render(request,"homepage.html")
+
+def dashboard(request):
+     try:
+          events=Event.objects.all()
+         
+     
+          return render(
+             request,
+             "dashboard.html",
+             {"events":events}
+          )
+     except Exception as e:
+            messages.error(request,e)
+     
+
 def register(request):
      if request.method == "POST":
          username = request.POST["username"]
@@ -19,7 +35,7 @@ def register(request):
              messages.success(request,"Account created successfully")
              return redirect("login") 
          except Exception as e:
-             messages.error(request, f"Registration failed: {e}") 
+             messages.error(request,"The username already exists!") 
      return render(request, "register.html")
 
 def login_view(request):
@@ -45,6 +61,8 @@ def login_view(request):
                       messages.error(request, f"login failed: {e}")
 
     return render(request,"login.html") 
+
+
              
 
 

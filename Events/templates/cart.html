@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        {% for item in cartitems %}
+         <div>
+         <h3>{{item.ticketype.name}}</h3>
+         <p>{{item.quantity}} tickets</p>
+         </div>
+         {% empty %}
+         <p> Your cart is empty</p>
+         {% endfor %}
+         <p>Total amount:{{total}}</p>
+         <a>Proceed to checkout</a>
+         
+
+    </body>
+</html>

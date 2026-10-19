@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+    {% if messages %}
+     {% for message in messages %}
+      {% if "event" in message|lower or "ticket" in message|lower %}
+        <p>{{message}}</p>
+       {% endif %}
+    {% endfor %}
+    {% endif %}
+        <h1>Create an event</h1>
+        <p> Add event and as many tickettypes as yu wish</p>
+        <form method="POST" action="{% url 'createevent' %}">
+            {% csrf_token %}
+            <h2>Event details</h2>
+            <label for="name">Event name:</label>
+            <input
+            type="text"
+            id="name"
+            name="name"
+            
+            required >
+            <label for="description">Desription</label>
+            <textarea
+            type="text"
+            id="description"
+            name="description"
+            required></textarea>
+            <label for="location">Event Location:</label>
+            <input
+            type="text"
+            id="location"
+            name="location"
+            required>
+            <label for="date">Date:</label>
+            <input
+            type="date"
+            id="date"
+            name="date"
+            required>
+            <label for="startime">Time:</label>
+            <input
+            type="time"
+            id="startime"
+            name="time"
+            required>
+
+            <h2>Add Tickets for the event</h2>
+            <p>For each ticket type indicate type,price and quantity available</p>
+            <div class="ticket-container" id="ticket-container">
+                <div class="ticket-card">
+                    <div class="tickettype-heading">
+                        <h3>Ticket type 1</h3>
+                    </div>
+                    <label for="tickettype">Ticket name:</label>
+                    <input
+                    type="text"
+                    id="tickettype"
+                    name="ticket_name[]"
+                    placeholder="eg. Regular,"
+                    required>
+                    <label for="price">Price (KSH):</label>
+                    <input
+                    type="number"
+                    id="price"
+                    name="price[]"
+                    min="0"
+                    step="0.01"
+                    required>
+                    <label for="quantity">Quantity:</label>
+                    <input
+                    type="number"
+                    id="quantity"
+                    name="quantity[]"
+                    min="0"
+                    step="1"
+                    placeholder="eg.100 ,"
+                    required>
+
+                    <button
+                    class="remove-btn" type="button">remove</button>
+
+
+                </div>
+            </div>
+            <button type="button" id="addtickettype">+ Add another Ticket Type</button>
+            <button type="submit">Create event and tickets</button>
+
+
+        </form>
+        <a href="{% url 'dashboard' %}">Back to dashboard</a>
+
+        <script>
+            // modify tickettype heading
+            const ticketcontainer=document.getElementById("ticket-container"); 
+            function Updatetickettypeheading(){
+                const ticketcards=ticketcontainer.querySelectorAll(".ticket-card");
+                ticketcards.forEach((card,index)=>{
+                    card.querySelector("h3").textContent= `Ticket type ${index + 1}`
+                });
+            };
+            const addticketbtn=document.getElementById("addtickettype");
+            addticketbtn.addEventListener("click", ()=>{
+            const newticket=document.createElement("div");
+            newticket.classList.add("ticket-card");
+            newticket.innerHTML=`
+             <div class="tickettype-heading">
+                        <h3></h3>
+                    </div>
+                    <label for="tickettype">Ticket name:</label>
+                    <input
+                    type="text"
+                    id="tickettype"
+                    name="ticket_name[]"
+                    placeholder="eg. VIP,"
+                    required>
+                    <label for="price">Price (KSH):</label>
+                    <input
+                    type="number"
+                    id="price"
+                    name="price[]"
+                    min="0"
+                    step="0.01"
+                    required>
+                    <label for="quantity">Quantity:</label>
+                    <input
+                    type="number"
+                    id="quantity"
+                    name="quantity[]"
+                    min="0"
+                    step="1"
+                    placeholder="eg.100 ,"
+                    required>
+
+                    <button
+                    class="remove-btn" type="button">remove</button>`;
+             ticketcontainer.appendChild(newticket);
+             Updatetickettypeheading();
+             });
+
+             ticketcontainer.addEventListener("click",(event)=>{
+                if (event.target.classList.contains("remove-btn")){
+                    event.target.closest(".ticket-card").remove();
+
+                    Updatetickettypeheading();
+                }
+             });
+
+
+
+
+
+        </script>
+    </body>
+</html>
